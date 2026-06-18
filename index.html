@@ -251,7 +251,7 @@ function savePortalData(name, demo) {
       demo: !!demo,
       authenticatedAt: new Date().toISOString()
     };
-    localStorage.setItem('kubsPortal', JSON.stringify(data));
+    localStorage.setItem('accPortalSession', JSON.stringify(data));
   } catch (e) {
     console.warn('Could not access localStorage', e);
   }
