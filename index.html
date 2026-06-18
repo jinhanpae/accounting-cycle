@@ -243,17 +243,37 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 function setStatus(message) { statusBoxEl.textContent = message; }
 
+// Save data for sub‑modules
+function savePortalData(name, demo) {
+  try {
+    const data = {
+      studentName: name,
+      demo: !!demo,
+      authenticatedAt: new Date().toISOString()
+    };
+    localStorage.setItem('kubsPortal', JSON.stringify(data));
+  } catch (e) {
+    console.warn('Could not access localStorage', e);
+  }
+} 
+
 function startPortal() {
   const name = studentNameEl.value.trim();
   const pw = coursePasswordEl.value.trim();
   if (!name) { setStatus('Enter your name / ID.'); studentNameEl.focus(); return; }
   if (pw !== portalConfig.password) { setStatus('Password is incorrect.'); coursePasswordEl.focus(); return; }
+
+  savePortalData(name, false);
+
   setStatus('Welcome, ' + name + '. You can open the modules.');
 }
 
 function startDemo() {
   studentNameEl.value = 'Demo User';
   coursePasswordEl.value = portalConfig.password;
+
+  savePortalData(name, true);
+  
   setStatus('Demo mode: you can open the modules.');
 }
 
