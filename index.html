@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting Cycle Practice Portal</title>
+<style>
+:root {
+  --bg:#f3f6fb;
+  --panel:#ffffff;
+  --line:#d7e0ea;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --blue-1:#3b82f6;
+  --blue-2:#2563eb;
+  --blue-3:#1d4ed8;
+  --blue-soft:#e9f1ff;
+  --shadow:0 12px 32px rgba(37,99,235,.08);
+  --radius:18px;
+}
+* { box-sizing:border-box; }
+html,body { margin:0; padding:0; }
+body {
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:linear-gradient(180deg,#eef4ff 0%,#f7faff 180px,#f3f6fb 100%);
+  color:var(--text);
+  line-height:1.5;
+}
+.container { max-width:1180px; margin:0 auto; padding:24px 18px 40px; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+.hero { display:grid; grid-template-columns:1.45fr .95fr; gap:18px; padding:28px; margin-bottom:18px; }
+.brand { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+.logo {
+  width:56px; height:56px; border-radius:16px;
+  background:linear-gradient(135deg,var(--blue-1),var(--blue-3));
+  display:grid; place-items:center; color:#fff;
+  box-shadow:0 10px 24px rgba(37,99,235,.24);
+}
+.logo svg { width:30px; height:30px; }
+.eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 10px; border-radius:999px;
+  background:var(--blue-soft); color:var(--blue-3);
+  font-size:12px; font-weight:700; letter-spacing:.02em;
+  margin-bottom:10px;
+}
+h1 { margin:0 0 10px; font-size:32px; line-height:1.14; letter-spacing:-.02em; }
+.hero-text { margin:0; color:var(--muted); max-width:60ch; font-size:15px; }
+.main-grid { display:grid; grid-template-columns:1.35fr .95fr; gap:18px; margin-bottom:18px; }
+.access { padding:22px; }
+.access h2 { margin:0 0 6px; font-size:18px; }
+.login-prompt {
+  text-align:center; font-size:13px; color:#6b7280;
+  margin:6px 0 16px; line-height:1.4;
+}
+.login-field { margin-bottom:18px; }
+.label { display:block; margin:0 0 6px; font-size:13px; font-weight:700; }
+.input {
+  width:100%; height:44px;
+  border:1px solid #cfd8e3; border-radius:12px;
+  padding:0 12px; font-size:14px; background:#fff;
+}
+.input:focus {
+  outline:none; border-color:#3b82f6;
+  box-shadow:0 0 0 4px rgba(59,130,246,.12);
+}
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-height:44px; padding:0 16px; border:0;
+  border-radius:12px; text-decoration:none;
+  font-size:14px; font-weight:700; cursor:pointer;
+  transition:transform .16s ease, box-shadow .16s ease, opacity .16s ease;
+}
+.btn:hover { transform:translateY(-1px); }
+.btn:active { transform:translateY(0); }
+.btn-primary {
+  color:#fff;
+  background:linear-gradient(135deg,#3b82f6 0%,#2563eb 55%,#1d4ed8 100%);
+  box-shadow:0 8px 18px rgba(37,99,235,.24);
+}
+.btn-secondary {
+  color:var(--blue-3);
+  background:#eef4ff;
+  border:1px solid #cfe0ff;
+}
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; }
+.status-box {
+  margin-top:12px; border:1px dashed #bfd2f7;
+  background:#f7faff; border-radius:14px;
+  padding:10px 12px; font-size:13px; color:#6b7280;
+}
+.modules { padding:22px; }
+.modules h2 { margin:0 0 10px; font-size:18px; }
+.module-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.module-card {
+  border:1px solid var(--line); border-radius:16px;
+  background:#ffffff; padding:16px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.module-title { margin:0; font-size:18px; }
+.module-step { font-size:12px; font-weight:700; color:var(--blue-2); letter-spacing:.04em; }
+.module-desc { margin:4px 0 0; color:var(--muted); font-size:14px; }
+.module-footer {
+  margin-top:auto;
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+}
+.progress { font-size:13px; color:var(--muted); }
+.footer {
+  margin-top:4px; padding:18px 22px;
+  font-size:12px; color:var(--muted);
+  display:flex; justify-content:space-between; gap:10px;
+}
+@media (max-width:980px) { .hero,.main-grid,.module-grid { grid-template-columns:1fr; } }
+@media (max-width:640px) {
+  .container { padding:16px 12px 28px; }
+  .hero,.access,.modules,.footer,.module-card { padding:16px; }
+  h1 { font-size:26px; }
+  .btn,.input { width:100%; }
+  .btn-row { width:100%; }
+  .footer { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <section class="card hero">
+    <div>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 6.5h14"></path>
+            <path d="M7 6.5v11"></path>
+            <path d="M17 6.5v11"></path>
+            <path d="M5 17.5h14"></path>
+            <path d="M12 6.5v11"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="eyebrow">Accounting Education</div>
+          <h1>Accounting Cycle Practice Portal</h1>
+        </div>
+      </div>
+      <p class="hero-text">Use this portal to move through the accounting cycle: Classify Accounts, Journal Entry, Trial Balance, Financial Statements, and Closing Entry.</p>
+    </div>
+    <aside class="card access">
+      <h2>Course access</h2>
+      <p class="login-prompt">Enter your name / ID and password to start.</p>
+      <div class="login-field">
+        <label class="label" for="studentName">Student Name / ID</label>
+        <input class="input" id="studentName" type="text" placeholder="e.g., 20260001 / Minji Kim">
+      </div>
+      <div class="login-field">
+        <label class="label" for="coursePassword">Password</label>
+        <input class="input" id="coursePassword" type="password" placeholder="Enter password (KUBS)">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="startPortalBtn" type="button">Start</button>
+        <button class="btn btn-secondary" id="demoBtn" type="button">Demo mode</button>
+      </div>
+      <div class="status-box" id="statusBox">Password: KUBS</div>
+    </aside>
+  </section>
+
+  <section class="card modules">
+    <h2>Modules</h2>
+    <div class="module-grid">
+      <article class="module-card">
+        <div>
+          <div class="module-step">STEP 1</div>
+          <h3 class="module-title">Classify Accounts</h3>
+          <p class="module-desc">Review account types and normal balances.</p>
+        </div>
+        <div class="module-footer">
+          <div class="progress">Start here</div>
+          <a class="btn btn-primary" href="https://jinhanpae.github.io/ClassifyAccopunts-app/" target="_blank" rel="noopener noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="module-card">
+        <div>
+          <div class="module-step">STEP 2</div>
+          <h3 class="module-title">Journal Entry</h3>
+          <p class="module-desc">Practice debits and credits for transactions.</p>
+        </div>
+        <div class="module-footer">
+          <div class="progress">After Step 1</div>
+          <a class="btn btn-primary" href="https://jinhanpae.github.io/Journal-Entry-Practice---Pure-Air/" target="_blank" rel="noopener noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="module-card">
+        <div>
+          <div class="module-step">STEP 3</div>
+          <h3 class="module-title">Trial Balance</h3>
+          <p class="module-desc">Check that total debits equal total credits.</p>
+        </div>
+        <div class="module-footer">
+          <div class="progress">After Step 2</div>
+          <a class="btn btn-primary" href="https://jinhanpae.github.io/AccCycle_Beck-Equipment-Repair/" target="_blank" rel="noopener noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="module-card">
+        <div>
+          <div class="module-step">STEP 4</div>
+          <h3 class="module-title">Financial Statements</h3>
+          <p class="module-desc">Prepare income statement and statement of financial position.</p>
+        </div>
+        <div class="module-footer">
+          <div class="progress">After Step 3</div>
+          <a class="btn btn-primary" href="https://jinhanpae.github.io/AccCycle_Beck-Equipment-Repair/" target="_blank" rel="noopener noreferrer">Open</a>
+        </div>
+      </article>
+
+      <article class="module-card">
+        <div>
+          <div class="module-step">STEP 5</div>
+          <h3 class="module-title">Closing Entry</h3>
+          <p class="module-desc">Complete the four-step closing process.</p>
+        </div>
+        <div class="module-footer">
+          <div class="progress">Final step</div>
+          <a class="btn btn-primary" href="https://jinhanpae.github.io/AccCycle_Beck-Equipment-Repair/" target="_blank" rel="noopener noreferrer">Open</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="card footer">
+    <div>For Korea University classroom use only. Do not redistribute.</div>
+    <div>&copy; <span id="year"></span> Jinhan Pae</div>
+  </footer>
+</div>
+<script>
+const portalConfig = { password: 'KUBS' };
+const studentNameEl = document.getElementById('studentName');
+const coursePasswordEl = document.getElementById('coursePassword');
+const statusBoxEl = document.getElementById('statusBox');
+const startPortalBtn = document.getElementById('startPortalBtn');
+const demoBtn = document.getElementById('demoBtn');
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function setStatus(message) { statusBoxEl.textContent = message; }
+
+function startPortal() {
+  const name = studentNameEl.value.trim();
+  const pw = coursePasswordEl.value.trim();
+  if (!name) { setStatus('Enter your name / ID.'); studentNameEl.focus(); return; }
+  if (pw !== portalConfig.password) { setStatus('Password is incorrect.'); coursePasswordEl.focus(); return; }
+  setStatus('Welcome, ' + name + '. You can open the modules.');
+}
+
+function startDemo() {
+  studentNameEl.value = 'Demo User';
+  coursePasswordEl.value = portalConfig.password;
+  setStatus('Demo mode: you can open the modules.');
+}
+
+startPortalBtn.addEventListener('click', startPortal);
+demoBtn.addEventListener('click', startDemo);
+</script>
+</body>
+</html>
